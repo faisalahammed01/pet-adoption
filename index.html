@@ -74,6 +74,23 @@
      <!-- spinner Start-->
       <span id="loading" class="loading loading-bars loading-lg hidden mx-auto"></span>
       <!-- Spinner End -->
+
+      <!-- Modal Part Start -->
+      <button class="btn hidden" onclick="customModal.showModal()">open modal</button>
+      <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+           
+          <div id="modalContainer"></div>
+
+          <div class="modal-action">
+            <form method="dialog">
+              <!-- if there is a button in form, it will close the modal -->
+              <button class="btn px-52 text-[#0E7A81] bg-teal-50">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+       <!-- Modal Part End -->
      <!-- Fetch All Pets start -->
       <section class="flex">
         <div id="pet-card" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5"></div>

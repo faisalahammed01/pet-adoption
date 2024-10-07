@@ -1,7 +1,19 @@
 //!----------------Function---------------
-//
-const loadPet = () => {
+//---------Category Pet one by one load----------
+const loadPet = async () => {
+  // console.log(category);
+
   document.getElementById("loading").style.display = "none";
+  // load data
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/peddy/category/dog`
+  );
+  const data = await res.json();
+  displayPet(data.data);
+};
+//---------Category Pet one by one display----------
+const displayPet = (category) => {
+  console.log(category);
 };
 
 // Onclick caed BTN
@@ -12,7 +24,7 @@ const btnLoad = () => {
   }, 2000);
 };
 
-//!-------------Fetch All Pet Categoriescls-------------------------
+//!-------------Fetch All Pet Categories-------------------------
 
 const categoriesLoad = () => {
   fetch("https://openapi.programming-hero.com/api/peddy/categories")
@@ -25,12 +37,49 @@ const displaybtn = (categories) => {
   const categoriesContainer = document.getElementById("categories");
   categories.forEach((item) => {
     const btn = document.createElement("div");
-    btn.innerHTML = ` <button onclick="btnLoad()" class="flex items-center gap-4 btn btn-ghost rounded-3xl border border-gray-200 "><img class='size-9' src="${item.category_icon}"> ${item.category}</button>`;
+    btn.innerHTML = `<button onclick="btnLoad()" class="flex items-center gap-4 btn btn-ghost rounded-3xl border border-gray-200 "><img class='size-9' src="${item.category_icon}"> ${item.category}</button>`;
 
     categoriesContainer.append(btn);
+    console.log(item.category);
   });
 };
+const lodeDetails = async (petId) => {
+  console.log(petId);
+  const url = `https://openapi.programming-hero.com/api/peddy/pet/${petId}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  displayDetails(data.petData);
+};
+// -----------------button details----------------
+const displayDetails = (card) => {
+  const detailsContainer = document.getElementById("modalContainer");
+  detailsContainer.innerHTML = `
+      <img class="w-full" src="${card.image}">
+      <h2 class="font-extrabold text-2xl py-3">Alessia Max</h2>
+      <small class="font-semibold"><p class="py-2">
+          <i class="fa-solid fa-qrcode"></i>
+          Breed:${card.breed}
+          </p>
+          <p class="py-2">
+          <i class="fa-regular fa-calendar-check"></i>
+          Birth:${card.date_of_birth}
+          </p>
+          <p class="py-2">
+          <i class="fa-solid fa-mercury"></i>
+          Gender:${card.gender}
+          </p>
+          <p class="py-2">
+          <i class="fa-solid fa-dollar-sign"></i>
+          Price:${card.price}
+          </p></small>
 
+          <h2 class="font-bold py-3">Details Information</h2>
+          <p>${card.pet_details}</p>
+  `;
+
+  document.getElementById("customModal").showModal();
+};
+// -----------------button Details-------------------
 // ! <------------------All Pets Card part------------------->
 
 const cardLoad = () => {
@@ -57,9 +106,9 @@ const cardShow = (pets) => {
        <p><i class="fa-solid fa-mercury"></i> Gender:${card.gender}</p>
        <p><i class="fa-solid fa-dollar-sign"></i> Price:${card.price}</p></small>
     <div class="flex items-center gap-4">  
-      <button class'btn'><i class="fa-solid fa-thumbs-up"></i></button>
+      <button ><i class="fa-solid fa-thumbs-up"></i></button>
       <button class="text-[#0E7A81]">Adopt</button>
-      <button class="text-[#0E7A81]">Details</button>
+      <button onclick="lodeDetails('${card.petId}')" class="text-[#0E7A81]">Details</button>
     </div>
   </div>
 </div>`;
