@@ -74,8 +74,25 @@
      <!-- spinner Start-->
       <span id="loading" class="loading loading-bars loading-lg hidden mx-auto"></span>
       <!-- Spinner End -->
-
-      <!-- Modal Part Start -->
+       <!--Adopt Modal Part Start -->
+       <button id="showAdopt" class="btn hidden" onclick="adoptmodal.showModal()">open modal</button>
+       <dialog id="adoptmodal" class="modal">
+         <div class="modal-box">
+          <div class="flex justify-center items-center"><i class="fa-regular fa-handshake" style="color: #ff0000;"></i></div>
+          <div>
+            <h3 class="text-center font-bold text-xl my-2">Congrates</h3>
+            <p class="text-center">Adoption Process is Start For Your Pet</p>
+          </div>
+          <div class="flex justify-center items-center my-3">
+             <h1 class="text-xl font-bold text-red-500" id="time">3</h1>
+          </div>
+         </div>
+         <form method="dialog" class="modal-backdrop">
+           <button id="close"></button>
+         </form>
+       </dialog>
+       <!--Adopt Modal Part End -->
+      <!--Details Modal Part Start -->
       <button class="btn hidden" onclick="customModal.showModal()">open modal</button>
       <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
         <div class="modal-box">
@@ -90,13 +107,21 @@
           </div>
         </div>
       </dialog>
-       <!-- Modal Part End -->
+       <!-- Modal Details Part End -->
      <!-- Fetch All Pets start -->
-      <section class="flex">
-        <div id="pet-card" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5"></div>
-        <div class="w-4/6"></div>
+      <section id="pets-section" class="flex">
+        <div id="pets-card" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5">
+        </div>
+        <div id="sideCard" class="w-4/6"></div>
       </section>
       <!-- Fetch All Pets End -->
+       <!-- Fetch All Pet start -->
+      <section class="flex">
+        <div id="pet-card" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5">
+        </div>
+        <div id="sideCard" class="w-4/6"></div>
+      </section>
+      <!-- Fetch All Pet End -->
   </main>
 </head>
 <!-- Footer part start -->

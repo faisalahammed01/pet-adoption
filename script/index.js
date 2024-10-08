@@ -1,26 +1,50 @@
 //!----------------Function---------------
 //---------Category Pet one by one load----------
-const loadPet = async () => {
+const loadPet = async (category) => {
   // console.log(category);
 
   document.getElementById("loading").style.display = "none";
   // load data
   const res = await fetch(
-    `https://openapi.programming-hero.com/api/peddy/category/dog`
+    `https://openapi.programming-hero.com/api/peddy/category/${category}`
   );
   const data = await res.json();
+
   displayPet(data.data);
 };
 //---------Category Pet one by one display----------
-const displayPet = (category) => {
-  console.log(category);
+const displayPet = (pets) => {
+  const cardContainer = document.getElementById("pet-card");
+  pets.forEach((card) => {
+    const cards = document.createElement("div");
+    cards.classList = "card border border-gray-200";
+    cards.innerHTML = `
+  <figure>
+    <img
+      src="${card.image}" />
+  </figure>
+  <div class="card-body">
+        <small><h3 class="text-xl font-bold">${card.pet_name}</h3>
+       <p><i class="fa-solid fa-qrcode"></i> Breed:${card.breed}</p>  
+       <p><i class="fa-regular fa-calendar"></i> Birth:${card.date_of_birth}</p>
+       <p><i class="fa-solid fa-mercury"></i> Gender:${card.gender}</p>
+       <p><i class="fa-solid fa-dollar-sign"></i> Price:${card.price}</p></small>
+    <div class="flex items-center gap-4">  
+      <button ><i class="fa-solid fa-thumbs-up"></i></button>
+      <button onclick="lodeAdopt()" class="text-[#0E7A81]">Adopt</button>
+      <button onclick="lodeDetails('${card.petId}')" class="text-[#0E7A81]">Details</button>
+    </div>
+  </div>
+</div>`;
+    cardContainer.append(cards);
+  });
 };
 
 // Onclick caed BTN
-const btnLoad = () => {
+const btnLoad = (category) => {
   document.getElementById("loading").style.display = "block";
   setTimeout(function () {
-    loadPet();
+    loadPet(category);
   }, 2000);
 };
 
@@ -37,10 +61,9 @@ const displaybtn = (categories) => {
   const categoriesContainer = document.getElementById("categories");
   categories.forEach((item) => {
     const btn = document.createElement("div");
-    btn.innerHTML = `<button onclick="btnLoad()" class="flex items-center gap-4 btn btn-ghost rounded-3xl border border-gray-200 "><img class='size-9' src="${item.category_icon}"> ${item.category}</button>`;
+    btn.innerHTML = `<button onclick="btnLoad('${item.category}')" class="flex items-center gap-4 btn btn-ghost rounded-3xl border border-gray-200 "><img class='size-9' src="${item.category_icon}"> ${item.category}</button>`;
 
     categoriesContainer.append(btn);
-    console.log(item.category);
   });
 };
 const lodeDetails = async (petId) => {
@@ -79,7 +102,22 @@ const displayDetails = (card) => {
 
   document.getElementById("customModal").showModal();
 };
-// -----------------button Details-------------------
+// -----------------button Details  END-------------------
+// Adoprt modal part
+function adoptModal() {
+  let count = 3;
+  setInterval(function () {
+    count--;
+    if (count >= 0) {
+      timeId = document.getElementById("time");
+      timeId.innerHTML = count;
+    }
+    if (count === 0) {
+      document.getElementById("close").click();
+    }
+  }, 1000);
+  document.getElementById("showAdopt").click();
+}
 // ! <------------------All Pets Card part------------------->
 
 const cardLoad = () => {
@@ -90,7 +128,7 @@ const cardLoad = () => {
 };
 // <-----------------Card Display Show-------------------->
 const cardShow = (pets) => {
-  const cardContainer = document.getElementById("pet-card");
+  const cardContainer = document.getElementById("pets-card");
   pets.forEach((card) => {
     const cards = document.createElement("div");
     cards.classList = "card border border-gray-200";
@@ -107,7 +145,7 @@ const cardShow = (pets) => {
        <p><i class="fa-solid fa-dollar-sign"></i> Price:${card.price}</p></small>
     <div class="flex items-center gap-4">  
       <button ><i class="fa-solid fa-thumbs-up"></i></button>
-      <button class="text-[#0E7A81]">Adopt</button>
+      <button onclick="adoptModal()" class="text-[#0E7A81]">Adopt</button>
       <button onclick="lodeDetails('${card.petId}')" class="text-[#0E7A81]">Details</button>
     </div>
   </div>
