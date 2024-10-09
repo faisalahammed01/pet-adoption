@@ -13,9 +13,32 @@ const loadPet = async (category) => {
 //---------Category Pet one by one display----------
 const displayPet = (pets) => {
   const cardContainer = document.getElementById("pet-card");
+  cardContainer.innerHTML = "";
+
+  if (pets.length == 0) {
+    cardContainer.classList.remove("grid");
+    cardContainer.innerHTML = `
+    <div class="min-h-[300px] flex flex-col gap-5 justify-center items-center bg-[#13131316] rounded-xl p-10">
+       <img src="images/error.webp" alt="">
+    <h2 class="text-center text-xl font-bold">
+        No Information Available
+    </h2>
+    <p>
+    
+      There is no information about birds on the website, here there is information about dogs, cats and Rabbits..
+    </p>
+
+    </div>
+    `;
+    return;
+  } else {
+    cardContainer.classList.add("grid");
+  }
+
   pets.forEach((card) => {
     const cards = document.createElement("div");
     cards.classList = "card border border-gray-200";
+
     cards.innerHTML = `
   <figure>
     <img
@@ -23,14 +46,34 @@ const displayPet = (pets) => {
   </figure>
   <div class="card-body">
         <small><h3 class="text-xl font-bold">${card.pet_name}</h3>
-       <p><i class="fa-solid fa-qrcode"></i> Breed:${card.breed}</p>  
-       <p><i class="fa-regular fa-calendar"></i> Birth:${card.date_of_birth}</p>
-       <p><i class="fa-solid fa-mercury"></i> Gender:${card.gender}</p>
-       <p><i class="fa-solid fa-dollar-sign"></i> Price:${card.price}</p></small>
+       <p><i class="fa-solid fa-qrcode"></i> Breed:${
+         card.breed !== undefined && card.breed !== null
+           ? card.breed
+           : "Not available"
+       }</p>  
+       <p><i class="fa-regular fa-calendar"></i> Birth:${
+         card.date_of_birth !== undefined && card.date_of_birth !== null
+           ? card.date_of_birth
+           : "Not available"
+       }</p>
+       <p><i class="fa-solid fa-mercury"></i> Gender:${
+         card.gender !== undefined && card.gender !== null
+           ? card.gender
+           : "Not available"
+       }</p>
+       <p><i class="fa-solid fa-dollar-sign"></i> Price:${
+         card.price !== undefined && card.price !== null
+           ? card.price
+           : "Not available"
+       }</p></small>
     <div class="flex items-center gap-4">  
-      <button ><i class="fa-solid fa-thumbs-up"></i></button>
-      <button onclick="lodeAdopt()" class="text-[#0E7A81]">Adopt</button>
-      <button onclick="lodeDetails('${card.petId}')" class="text-[#0E7A81]">Details</button>
+      <button ><i onclick="like('${
+        card.image
+      }')" class="fa-solid fa-thumbs-up"></i></button>
+      <button onclick="adoptModal()" class="text-[#0E7A81]">Adopt</button>
+      <button onclick="lodeDetails('${
+        card.petId
+      }')" class="text-[#0E7A81]">Details</button>
     </div>
   </div>
 </div>`;
@@ -40,6 +83,7 @@ const displayPet = (pets) => {
 
 // Onclick caed BTN
 const btnLoad = (category) => {
+  document.getElementById("pets-section").classList.add("hidden");
   document.getElementById("loading").style.display = "block";
   setTimeout(function () {
     loadPet(category);
@@ -103,13 +147,18 @@ const displayDetails = (card) => {
 // Adoprt modal part
 function adoptModal() {
   let count = 3;
-  setInterval(function () {
+  timeId = document.getElementById("time");
+  timeId.innerHTML = count;
+  const timer = setInterval(function () {
     count--;
     if (count >= 0) {
-      timeId = document.getElementById("time");
       timeId.innerHTML = count;
     }
     if (count === 0) {
+      timeId.innerHTML = count;
+    }
+    if (count === 0) {
+      clearInterval(timer);
       document.getElementById("close").click();
     }
   }, 1000);
@@ -126,6 +175,7 @@ const cardLoad = () => {
 // <-----------------Card Display Show-------------------->
 const cardShow = (pets) => {
   const cardContainer = document.getElementById("pets-card");
+
   pets.forEach((card) => {
     const cards = document.createElement("div");
     cards.classList = "card border border-gray-200";
@@ -136,17 +186,38 @@ const cardShow = (pets) => {
   </figure>
   <div class="card-body">
         <small><h3 class="text-xl font-bold">${card.pet_name}</h3>
-       <p><i class="fa-solid fa-qrcode"></i> Breed:${card.breed}</p>  
-       <p><i class="fa-regular fa-calendar"></i> Birth:${card.date_of_birth}</p>
-       <p><i class="fa-solid fa-mercury"></i> Gender:${card.gender}</p>
-       <p><i class="fa-solid fa-dollar-sign"></i> Price:${card.price}</p></small>
+       <p><i class="fa-solid fa-qrcode"></i> Breed:${
+         card.breed !== undefined && card.breed !== null
+           ? card.breed
+           : "Not available"
+       }</p>  
+       <p><i class="fa-regular fa-calendar"></i> Birth:${
+         card.date_of_birth !== undefined && card.date_of_birth !== null
+           ? card.date_of_birth
+           : "Not available"
+       }</p>
+       <p><i class="fa-solid fa-mercury"></i> Gender:${
+         card.gender !== undefined && card.gender !== null
+           ? card.gender
+           : "Not available"
+       }</p>
+       <p><i class="fa-solid fa-dollar-sign"></i> Price:${
+         card.price !== undefined && card.price !== null
+           ? card.price
+           : "Not available"
+       }</p></small>
     <div class="flex items-center gap-4">  
-      <button onclick="like('${card.image}')" ><i class="fa-solid fa-thumbs-up"></i></button>
+      <button onclick="like('${
+        card.image
+      }')" ><i class="fa-solid fa-thumbs-up"></i></button>
       <button onclick="adoptModal()" class="text-[#0E7A81]">Adopt</button>
-      <button onclick="lodeDetails('${card.petId}')" class="text-[#0E7A81]">Details</button>
+      <button onclick="lodeDetails('${
+        card.petId
+      }')" class="text-[#0E7A81]">Details</button>
     </div>
   </div>
 </div>`;
+
     cardContainer.append(cards);
   });
 };
@@ -158,6 +229,7 @@ const like = (image) => {
   `;
   likeContainer.append(side);
 };
+
 // ---------------Like Button End---------------
 // ! <------------------Call Functions--------------------->
 categoriesLoad();

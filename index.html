@@ -69,7 +69,7 @@
     <!-- Sort part -->
      <div class="justify-between flex py-4 items-center">
       <h3 class="text-lg font-bold">Best Deal For you</h3>
-      <button class="btn bg-[#0E7A81] text-white">Sort by Price</button>
+      <button id="Sort" class="btn bg-[#0E7A81] text-white">Sort by Price</button>
      </div>
      <!-- spinner Start-->
       <span id="loading" class="loading loading-bars loading-lg hidden mx-auto"></span>
@@ -109,18 +109,18 @@
       </dialog>
        <!-- Modal Details Part End -->
      <!-- Fetch All Pets start -->
-      <section id="pets-section" class="flex">
+      <section id="pets-section" class="flex ">
         <div id="pets-card" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5">
         </div>
         <div id="sideCard" class="w-4/6 grid grid-cols-2 bg-cover h-full gap-3 ml-3 border border-gray-200"></div>
       </section>
       <!-- Fetch All Pets End -->
-       <!-- Fetch All Pet start
+       <!-- Fetch All Pet start -->
       <section class="flex">
         <div id="pet-card" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-5">
         </div>
-        <div id="sideCard" class="w-4/6"></div>
-      </section> -->
+        <div id="sideCard" class="w-4/6 grid grid-cols-2 bg-cover h-full gap-3 ml-3 border border-gray-200"></div>
+      </section>
       <!-- Fetch All Pet End -->
   </main>
 </head>
