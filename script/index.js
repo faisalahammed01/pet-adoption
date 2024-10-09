@@ -1,8 +1,6 @@
 //!----------------Function---------------
 //---------Category Pet one by one load----------
 const loadPet = async (category) => {
-  // console.log(category);
-
   document.getElementById("loading").style.display = "none";
   // load data
   const res = await fetch(
@@ -67,7 +65,6 @@ const displaybtn = (categories) => {
   });
 };
 const lodeDetails = async (petId) => {
-  console.log(petId);
   const url = `https://openapi.programming-hero.com/api/peddy/pet/${petId}`;
   const res = await fetch(url);
   const data = await res.json();
@@ -144,7 +141,7 @@ const cardShow = (pets) => {
        <p><i class="fa-solid fa-mercury"></i> Gender:${card.gender}</p>
        <p><i class="fa-solid fa-dollar-sign"></i> Price:${card.price}</p></small>
     <div class="flex items-center gap-4">  
-      <button ><i class="fa-solid fa-thumbs-up"></i></button>
+      <button onclick="like('${card.image}')" ><i class="fa-solid fa-thumbs-up"></i></button>
       <button onclick="adoptModal()" class="text-[#0E7A81]">Adopt</button>
       <button onclick="lodeDetails('${card.petId}')" class="text-[#0E7A81]">Details</button>
     </div>
@@ -153,6 +150,15 @@ const cardShow = (pets) => {
     cardContainer.append(cards);
   });
 };
+// -------------Like Button  End----------------
+const like = (image) => {
+  const likeContainer = document.getElementById("sideCard");
+  const side = document.createElement("div");
+  side.innerHTML = `<img src="${image}" alt="">
+  `;
+  likeContainer.append(side);
+};
+// ---------------Like Button End---------------
 // ! <------------------Call Functions--------------------->
 categoriesLoad();
 cardLoad();
